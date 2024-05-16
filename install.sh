@@ -127,15 +127,22 @@ main() {
     shift
   done
 
-  if [ -z "$token" ]; then
-    echo "Token is required"
+  if [ -z "$scope" ]; then
+    echo "--scope is required (e.g. 'org' or 'owner/repo')"
     exit 1
   fi
 
-  if [ -z "$scope" ]; then
-    echo "Scope is required (e.g. 'org' or 'owner/repo')"
+  if [ -z "$token" ]; then
+    echo "--token is required."
+    if [[ "$scope" == *"/"* ]]; then
+      echo "Visit https://github.com/$scope/settings/actions/runners/new?arch=x64&os=linux"
+    else
+      echo "Visit https://github.com/organizations/$scope/settings/actions/runners/new?arch=x64&os=linux"
+    fi
+    
     exit 1
   fi
+
 
   check_and_install_docker
   write_env_file "$scope" "$token"
