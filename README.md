@@ -42,7 +42,7 @@ Initialize the runner w/ the `install.sh` script. This only needs to be ran to s
 `stop.sh` shuts down the systemd service but doesn't (yet) do more cleanup beyond that.
 
 ```
-./stop.sh
+./stop.sh --scope membrane-io
 ```
 
 - `scope` the runner was configured for
