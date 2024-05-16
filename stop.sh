@@ -27,12 +27,10 @@ main() {
   fi
 
   service=$(service_name "$scope")
-  sudo systemctl mask "$service"
-  sudo systemctl stop "$service"
   sudo systemctl disable "$service"
-  sudo systemctl unmask "$service"
+  sudo systemctl stop "$service"
   # shellcheck disable=SC2015
-  docker stop "$service" || true && docker rm -f "$service" || true
+  docker stop "$service" 2>/dev/null || true && docker rm -f "$service" 2>/dev/null || true
 }
 
 # Execute the main function only if the script is called directly
