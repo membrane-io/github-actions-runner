@@ -37,3 +37,11 @@ This script will build the local docker file and start the systemd service previ
 ```
 ./shutdown.sh
 ```
+
+## Why this exists
+
+The big challenge with self hosting GitHub runners is that they run natively in the host and don't really clean up after themselves. An action could install (or delete) something unintentional. Scripts that don't clean up after themselves would end up leaving a mess.
+
+GitHub provides a [base docker image](https://github.com/actions/runner/blob/main/images/Dockerfile) but not much beyond that. Thisi repo glues the rest of it together.
+
+The self-hosted runner is run in ephemeral mode, meaning it handles one job and shuts down. The container is ran with `docker rm -f` to clean itself up after shutdown and the systemd service automatically restarts it to handle the next job.
