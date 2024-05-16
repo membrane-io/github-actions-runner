@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # shellcheck disable=SC1091
 source start.sh
