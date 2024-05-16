@@ -60,7 +60,7 @@ Description=Self hosted GitHub runner
 Restart=always
 EnvironmentFile=$env_file
 ExecStartPre=-$docker rm -f $image 
-ExecStart=$docker rm -f $image sh -c './config.sh --url \$RUNNER_TARGET_URL --token \$RUNNER_TOKEN --labels \$RUNNER_LABELS --unattended --ephemeral && ./run.sh'
+ExecStart=$docker run --rm $image sh -c './config.sh --url \$RUNNER_TARGET_URL --token \$RUNNER_TOKEN --labels \$RUNNER_LABELS --unattended --ephemeral && ./run.sh'
 ExecStop=$docker stop $image 
 
 [Install]

@@ -52,7 +52,7 @@ main() {
 
   # Enable the service if it is not already enabled                         
   if ! systemctl is-enabled --quiet "$service"; then                   
-    systemctl enable "$service"                                        
+    sudo systemctl enable "$service"                                        
     echo "Service $service has been enabled."                          
   else                                                                      
     echo "Service $service is already enabled."                        
@@ -61,11 +61,11 @@ main() {
   # Check if the service is active                                          
   if systemctl is-active --quiet "$service"; then                      
     # Restart the service if it's already running                           
-    systemctl restart "$service"                                       
+    sudo systemctl restart "$service"                                       
     echo "Service $service has been restarted."                        
   else                                                                      
     # Start the service if it's not running                                 
-    systemctl start "$service"                                         
+    sudo systemctl start "$service"                                         
     echo "Service $service has been started."                          
   fi
 }
