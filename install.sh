@@ -128,12 +128,12 @@ main() {
     shift
   done
 
-  if [ -z "$scope" ]; then
+  if [ -z "${scope+x}" ]; then
     echo "--scope is required (e.g. 'org' or 'owner/repo')"
     exit 1
   fi
 
-  if [ -z "$token" ]; then
+  if [ -z "${token+x}" ]; then
     echo "--token is required."
     if [[ "$scope" == *"/"* ]]; then
       echo "Visit https://github.com/$scope/settings/actions/runners/new?arch=x64&os=linux"

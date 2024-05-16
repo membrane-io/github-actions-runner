@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # shellcheck disable=SC1091
 source start.sh
@@ -20,7 +21,7 @@ main() {
     shift
   done
 
-  if [ -z "$scope" ]; then
+  if [ -z "${scope+x}" ]; then
     echo "Scope is required (e.g. 'org' or 'owner/repo')"
     exit 1
   fi

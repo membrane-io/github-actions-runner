@@ -40,7 +40,7 @@ main() {
     shift
   done
 
-  if [ -z "$scope" ]; then
+  if [ -z "${scope+x}" ]; then
     echo "Scope is required (e.g. 'org' or 'owner/repo')"
     exit 1
   fi
