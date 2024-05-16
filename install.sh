@@ -52,7 +52,7 @@ create_systemd_service() {
   docker="$(which docker || echo "/usr/bin/docker")"
 
   # Create the systemd service file
-  cat <<EOF > sudo tee "/etc/systemd/system/$service.service"
+  cat <<EOF | sudo tee "/etc/systemd/system/$service.service" > /dev/null
 [Unit]
 Description=Self hosted GitHub runner
 
