@@ -14,7 +14,7 @@ The self-hosted runner is run in ephemeral mode, meaning it handles one job and 
 
 Clone this repo on the machine you wish to act as a self-hosted runner. Only works for ubuntu right now.
 
-Go to the [self-hosted runners config](https://github.com/organizations/membrane-io/settings/actions/runners/new?arch=x64&os=linux) to get a new token
+Go to the [self-hosted runners config](https://github.com/organizations/membrane-io/settings/actions/runners/new?arch=x64&os=linux) to get a new token (this links to Membrane's, you may need to update the URL to match your org).
 
 ### First time setup
 
