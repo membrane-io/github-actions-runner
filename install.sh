@@ -111,9 +111,9 @@ Description=Self hosted GitHub runner
 
 [Service]
 Restart=always
-ExecStartPre=-$docker rm -f $scope || echo "Container already removed, continuing..."
-ExecStart=$docker run --env-file $env_file --rm --name $scope $image
-ExecStop=$docker stop $scope
+ExecStartPre=-$docker rm -f $service
+ExecStart=$docker run --env-file $env_file --rm --name $service $image
+ExecStop=$docker stop $service
 
 [Install]
 WantedBy=default.target

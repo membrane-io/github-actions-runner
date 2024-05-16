@@ -9,14 +9,14 @@ main() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
-      -s|--scope)
-        scope="$2"
-        shift
-        ;;
-      *)
-        echo "Unknown option: $key"
-        exit 1
-        ;;
+    -s | --scope)
+      scope="$2"
+      shift
+      ;;
+    *)
+      echo "Unknown option: $key"
+      exit 1
+      ;;
     esac
     shift
   done
@@ -27,10 +27,15 @@ main() {
   fi
 
   service=$(service_name "$scope")
-  systemctl stop "$service"
-} 
+  sudo systemctl mask "$service"
+  sudo systemctl stop "$service"
+  sudo systemctl disable "$service"
+  sudo systemctl unmask "$service"
+  # shellcheck disable=SC2015
+  docker stop "$service" || true && docker rm -f "$service" || true
+}
 
- # Execute the main function only if the script is called directly         
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then                              
-    main "$@"                                                             
-fi    
+# Execute the main function only if the script is called directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi
