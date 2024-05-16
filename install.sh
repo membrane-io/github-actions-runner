@@ -189,8 +189,10 @@ main() {
     exit 1
   fi
 
-  # shellcheck disable=SC1090
-  source $(env_file_path "$scope")
+  local env_path=$(env_file_path "$scope")
+  if [ -f "$env_path" ]; then
+    source "$env_path"
+  fi
 
   token="${token:-${RUNNER_TOKEN:-}}"
   if [ -z "${token:-}" ]; then
