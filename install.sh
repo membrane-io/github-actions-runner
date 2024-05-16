@@ -10,6 +10,7 @@ write_env_file() {
 
   service=$(service_name "$scope")
   image=$(image_name "$scope")
+  user=$(whoami)
 
   env_file="$PWD/$service.env"
 
@@ -32,9 +33,6 @@ write_env_file() {
       echo "$line" >> "$env_file"                                           
     fi                                                                      
   done   
-
-  # Correct the env file's permissions
-  sudo chown "$SUDO_USER":"$SUDO_USER" "$env_file"
 }
 
 create_systemd_service() {
@@ -54,7 +52,7 @@ create_systemd_service() {
   docker="$(which docker || echo "/usr/bin/docker")"
 
   # Create the systemd service file
-  cat <<EOF > "/etc/systemd/system/$service.service"
+  cat <<EOF > sudo tee "/etc/systemd/system/$service.service"
 [Unit]
 Description=Self hosted GitHub runner
 
@@ -70,12 +68,13 @@ WantedBy=default.target
 EOF
 
   # Reload systemd daemon
-  systemctl daemon-reload
+  sudo systemctl daemon-reload
 
   echo "Service $service created and ready to start. Run './start.sh' to start the service."
 }
 
 check_and_install_docker() {                                              
+  user=$(whoami)
   if ! command -v docker &> /dev/null; then                             
     echo "Docker is not installed. Installing Docker..."              
 
@@ -95,7 +94,7 @@ check_and_install_docker() {
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin                      
                                                                       
     # Add the current user to the docker group to allow running docker without sudo                                                                
-    sudo usermod -aG docker "$SUDO_USER"
+    sudo usermod -aG docker "$user"
     echo "Docker has been installed. You might need to log out and log back in to use Docker without sudo."                                        
   else                                                                  
     echo "Docker is already installed."                               
@@ -103,10 +102,11 @@ check_and_install_docker() {
 }                        
 
 main() {
-  if [ -n "$SUDO_USER" ]; then
-    echo "Must be run with sudo"
-    exit 1
-  fi
+  # Check if the script is being run as root                                
+  if [ "$EUID" -eq 0 ]; then                                                
+    echo "This script must not be run as root or with sudo."                
+    exit 1                                                                  
+  fi  
 
   # Parse command line arguments
   while [[ $# -gt 0 ]]; do
