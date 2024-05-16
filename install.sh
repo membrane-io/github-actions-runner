@@ -192,7 +192,8 @@ main() {
   # shellcheck disable=SC1090
   source $(env_file_path "$scope")
 
-  if [ -z "${token:-${RUNNER_TOKEN:-}}" ]; then
+  token="${token:-${RUNNER_TOKEN:-}}"
+  if [ -z "${token:-}" ]; then
     echo "--token is required."
     if [[ "$scope" == *"/"* ]]; then
       echo "Visit https://github.com/$scope/settings/actions/runners/new?arch=x64&os=linux"
