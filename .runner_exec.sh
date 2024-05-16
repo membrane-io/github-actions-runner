@@ -30,6 +30,7 @@ fi
   --token "$RUNNER_TOKEN" \
   $labels \
   --unattended \
+  --replace \
   --ephemeral
 
 ./run.sh

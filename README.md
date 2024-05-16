@@ -53,3 +53,25 @@ Initialize the runner w/ the `install.sh` script. This only needs to be ran to s
 ```
 
 - `scope` the runner was configured for
+
+## Debugging tips
+
+Get the status of the systemd service
+
+```
+systemd status github-runner.membrane-io.service
+```
+
+Get a tail log of the running systemd service. Useful for looking out for crash loops.
+
+```
+journalctl -u github-runner.membrane-io.service -f
+```
+
+Speaking of crash loops, look at the container's uptime
+
+```
+docker ps
+```
+
+You should see something like `github-runner.membrane-io` and an uptime reading. If it's only a few seconds and restarts (or disappears) then it's likely crash looping.
