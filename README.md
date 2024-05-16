@@ -26,6 +26,10 @@ Initialize the runner w/ the `install.sh` script. This only needs to be ran to s
 
 - `token` is the runner token provided by GitHub.
 - `scope` is where the runner will listen for actions. It can be a user/org or a specific repo.
+- `labels` an optional argument to assign a label to the runner.
+
+> [!TIP]
+> We assign our runners with the `ubuntu-latest` label. That means anytime an action runs that has a `runs-on` property of `ubuntu-latest`, our self-hosted runner will be chosen first if it's available. If it's not available it'll fall back to a GitHub runner. See GitHub's docs on [adding a runner to a workflow](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/using-self-hosted-runners-in-a-workflow) for other options.
 
 ### Start the runner
 

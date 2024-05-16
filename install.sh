@@ -8,7 +8,13 @@ create_systemd_service() {
   scope="$1"
   token="$2"
 
-  # Check if the systemd directory exists
+  if [ -n "$3" ]; then
+    labels="--labels $3"
+  else
+    labels=""
+  fi
+
+  Check if the systemd directory exists
   if [ ! -d "/etc/systemd/system" ]; then
     echo "Systemd directory not found"
     exit 1
@@ -28,7 +34,7 @@ Description=Self hosted GitHub runner
 [Service]
 Restart=always
 ExecStartPre=-$docker rm -f $image 
-ExecStart=$docker run --rm $image sh -c './config.sh --name $(hostname) --url https://github.com/$scope --token $token --labels ubuntu-latest --unattended --ephemeral && ./run.sh'
+ExecStart=$docker run --rm $image sh -c './config.sh --name $(hostname) --url https://github.com/$scope --token $token $labels --unattended --ephemeral && ./run.sh'
 ExecStop=$docker stop $image 
 
 [Install]
@@ -88,6 +94,10 @@ main() {
         scope="$2"
         shift
         ;;
+      -l|--labels)
+        labels="$2"
+        shift
+        ;;
       *)
         echo "Unknown option: $key"
         exit 1
@@ -112,9 +122,8 @@ main() {
     exit 1
   fi
 
-
-  check_and_install_docker
-  create_systemd_service "$scope" "$token"
+  # check_and_install_docker
+  create_systemd_service "$scope" "$token" "${labels:-}"
 }
 
  # Execute the main function only if the script is called directly         
