@@ -21,10 +21,10 @@ Go to the [self-hosted runners config](https://github.com/organizations/membrane
 
 ### First time setup
 
-Initialize the runner w/ the `install.sh` script. This only needs to be ran to setup the runner for the first time (or whenever `init` is updated in the future). This will setup a new systemd service to run the Dockerfile in this repo.
+Initialize the runner w/ the `install.sh` script. This only needs to be ran to setup the runner for the first time (or whenever `init` is updated in the future). This will setup a new systemd service to run the Dockerfile in this repo. This command will also create an env file of the services name that can be used to configure the docker container without restarting the service.
 
 ```
-./install.sh --scope membrane-io --token <token>
+./install.sh --scope membrane-io --token <token> --labels ubuntu-latest
 ```
 
 - `token` is the runner token provided by GitHub.
