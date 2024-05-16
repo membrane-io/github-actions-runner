@@ -1,7 +1,7 @@
 FROM ghcr.io/actions/actions-runner:latest
 RUN sudo apt update -y && sudo apt install build-essential git curl unzip snapd -y
 # Required by GitHub Actions
-RUN sudo snap install powershell --classic
+RUN sudo systemctl start snapd && sudo snap install powershell --classic
 RUN curl -fsSL --create-dirs -o ~/bin/yarn \
   https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn-1.22.19.js && \
   chmod +x ~/bin/yarn
