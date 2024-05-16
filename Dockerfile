@@ -5,6 +5,6 @@ RUN curl -fsSL --create-dirs -o ~/bin/yarn \
   chmod +x ~/bin/yarn
 
 COPY .runner_exec.sh exec.sh
-RUN chmod +x exec.sh
+RUN sudo chmod +x exec.sh
 
 CMD [ "./exec.sh"]
