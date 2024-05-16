@@ -1,5 +1,5 @@
 FROM ghcr.io/actions/actions-runner:latest
-RUN sudo apt update -y && sudo apt install build-essential git curl unzip -y
+RUN sudo apt update -y && sudo apt install build-essential git curl unzip snapd -y
 # Required by GitHub Actions
 RUN sudo snap install powershell --classic
 RUN curl -fsSL --create-dirs -o ~/bin/yarn \
