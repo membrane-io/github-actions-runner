@@ -2,6 +2,9 @@
 
 Tools to help operationalize self-hosting a github actions runner
 
+> [!IMPORTANT]
+> This project is an early work-in-progress under rapid development and tailored to our needs. Use at your own risk.
+
 ## Why this exists
 
 The big challenge with self hosting GitHub runners is that they run natively in the host and don't really clean up after themselves. An action could install (or delete) something unintentional. Scripts that don't clean up after themselves would end up leaving a mess.
