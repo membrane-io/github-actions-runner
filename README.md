@@ -19,8 +19,7 @@ Initialize the runner w/ the `install.sh` script. This only needs to be ran to s
 - `token` is the runner token provided by GitHub.
 - `scope` is where the runner will listen for actions. It can be a user/org or a specific repo.
 
-This will setup a new systemd service to run the Dockerfile in this repo. It should also create an env file
-named after your scope. So if the scope is `membrane-io` there should be a file called `github-runner.membrane-io.env`.
+This will setup a new systemd service to run the Dockerfile in this repo.
 
 ### Start the runner
 

@@ -4,37 +4,6 @@ set -euo pipefail
 # shellcheck disable=SC1091
 source start.sh
 
-write_env_file() {
-  scope="$1"
-  token="$2"
-
-  service=$(service_name "$scope")
-  image=$(image_name "$scope")
-  user=$(whoami)
-
-  env_file="$PWD/$service.env"
-
-  env_lines=("RUNNER_TARGET_URL=https://github.com/$scope"                  
-              "RUNNER_LABELS=ubuntu-latest"                                  
-              "RUNNER_TOKEN=$token")
-
-  # Ensure the file exists                                                  
-  touch "$env_file"                                                         
-
-  # Extract existing keys from the file                                     
-  existing_keys=$(awk -F= '{print $1}' "$env_file")                         
-                                                                              
-  for line in "${env_lines[@]}"; do
-    # Extract key from the line to be added                                 
-    key=$(echo "$line" | awk -F= '{print $1}')                              
-                                                                            
-    # Check if the key exists in the existing keys                          
-    if ! echo "$existing_keys" | grep -q "^$key$"; then                     
-      echo "$line" >> "$env_file"                                           
-    fi                                                                      
-  done   
-}
-
 create_systemd_service() {
   scope="$1"
   token="$2"
@@ -58,9 +27,8 @@ Description=Self hosted GitHub runner
 
 [Service]
 Restart=always
-EnvironmentFile=$env_file
 ExecStartPre=-$docker rm -f $image 
-ExecStart=$docker run --rm $image sh -c './config.sh --url \$RUNNER_TARGET_URL --token \$RUNNER_TOKEN --labels \$RUNNER_LABELS --unattended --ephemeral && ./run.sh'
+ExecStart=$docker run --rm $image sh -c './config.sh --name $(hostname) --url https://github.com/$scope --token $token --labels ubuntu-latest --unattended --ephemeral && ./run.sh'
 ExecStop=$docker stop $image 
 
 [Install]
@@ -146,7 +114,6 @@ main() {
 
 
   check_and_install_docker
-  write_env_file "$scope" "$token"
   create_systemd_service "$scope" "$token"
 }
 
