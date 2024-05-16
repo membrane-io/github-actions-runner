@@ -122,7 +122,7 @@ main() {
     exit 1
   fi
 
-  # check_and_install_docker
+  check_and_install_docker
   create_systemd_service "$scope" "$token" "${labels:-}"
 }
 
