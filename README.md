@@ -1,6 +1,6 @@
-# github-actions-runners
+# github-actions-runner
 
-Tools to make self hosting a linux runner simpler
+Tools to help operationalize self-hosting a github actions runner
 
 ## Why this exists
 
