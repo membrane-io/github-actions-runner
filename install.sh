@@ -14,7 +14,7 @@ create_systemd_service() {
     labels=""
   fi
 
-  Check if the systemd directory exists
+  # Check if the systemd directory exists
   if [ ! -d "/etc/systemd/system" ]; then
     echo "Systemd directory not found"
     exit 1
