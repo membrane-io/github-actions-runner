@@ -1,5 +1,5 @@
 FROM ghcr.io/actions/actions-runner:latest
-RUN sudo apt update -y && sudo apt install build-essential git curl unzip wget -y
+RUN sudo apt update -y && sudo apt install build-essential git curl unzip wget openssl libssl-dev -y
 # Required by GitHub Actions
 RUN wget https://github.com/PowerShell/PowerShell/releases/download/v7.4.2/powershell_7.4.2-1.deb_amd64.deb && \
   sudo dpkg -i powershell_7.4.2-1.deb_amd64.deb && \
